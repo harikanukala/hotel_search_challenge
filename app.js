@@ -22,8 +22,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/',function () {
-    search.getAllHotels();
+app.get('/hotels/search',function (req,res) {
+    search.getAllHotels()
+        .then(function(results) {
+            res.json({results: results});
+        });
 });
 
 

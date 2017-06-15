@@ -12,7 +12,7 @@ module.exports = {
           json : true,
       };
       request(options,function (error, response, body) {
-          const hotels = body;
+          const hotels = body.results;
           cb(error,hotels);
       });
   }
