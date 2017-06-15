@@ -5,6 +5,7 @@ var request = require('request');
 
 module.exports = {
   getHotels : function (provider, cb) {
+      console.log(provider);
       const options = {
         method : 'GET',
           uri : 'http://localhost:9000/scrapers/'+provider,
