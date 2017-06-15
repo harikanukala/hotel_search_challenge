@@ -1,7 +1,7 @@
 var express = require('express');
 var request = require('request');
 
-/* GET hotels listing given a provider. */
+/* GET hotels listing given a provider by calling scraper API. */
 
 module.exports = {
   getHotels : function (provider, cb) {

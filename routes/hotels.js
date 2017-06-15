@@ -8,7 +8,9 @@ var async = require('async');
 var providers = ['Expedia', 'Orbitz', 'Priceline', 'Travelocity', 'Hilton'];
 
 module.exports = {
-
+    /*
+        Get results from all the providers
+     */
     getAllHotels : function () {
         return new Promise(function (resolve, reject) {
             async.map(providers, function (provider, cb) {
@@ -17,7 +19,6 @@ module.exports = {
                     })
                 }, function (err, results) {
                     const output=combineResults(results);
-                    // console.log(output);
                     resolve(output);
                 }
             );
@@ -25,6 +26,9 @@ module.exports = {
     }
 };
 
+/*
+    Merge hotel results in to single object
+ */
 function combineResults(results) {
      console.log(results.length);
     var mergedRes = [];
@@ -36,6 +40,9 @@ function combineResults(results) {
     return sortByEcstasy(mergedRes);
 }
 
+/*
+    Sort the results by ecstasy
+ */
 function sortByEcstasy(results) {
     return results.sort((a, b) => {
         return b.ecstasy - a.ecstasy;
