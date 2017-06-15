@@ -7,7 +7,7 @@ var scraper = require('./hotels_scraper');
 var async = require('async');
 var providers = ['Expedia', 'Orbitz', 'Priceline', 'Travelocity', 'Hilton'];
 
-module.exports = {
+const service = {
     /*
         Get results from all the providers
      */
@@ -18,33 +18,33 @@ module.exports = {
                         cb(error, results);
                     })
                 }, function (err, results) {
-                    const output=combineResults(results);
+                    const output=service.combineResults(results);
                     resolve(output);
                 }
             );
         });
+    },
+    /*
+     Merge hotel results in to single object
+     */
+    combineResults:function (results) {
+        console.log(results.length);
+        var mergedRes = [];
+        for(var i=0;i<results.length;i++){
+            while(results[i].length>0){
+                mergedRes.push(results[i].pop());
+            }
+        }
+        return service.sortByEcstasy(mergedRes);
+    },
+    /*
+     Sort the results by ecstasy
+     */
+    sortByEcstasy:function (results) {
+        return results.sort((a, b) => {
+            return b.ecstasy - a.ecstasy;
+        });
     }
 };
+module.exports=service;
 
-/*
-    Merge hotel results in to single object
- */
-function combineResults(results) {
-     console.log(results.length);
-    var mergedRes = [];
-    for(var i=0;i<results.length;i++){
-        while(results[i].length>0){
-            mergedRes.push(results[i].pop());
-        }
-    }
-    return sortByEcstasy(mergedRes);
-}
-
-/*
-    Sort the results by ecstasy
- */
-function sortByEcstasy(results) {
-    return results.sort((a, b) => {
-        return b.ecstasy - a.ecstasy;
-    });
-}
